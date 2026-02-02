@@ -1,6 +1,6 @@
-import express from "express";
-import { ObjectId } from "mongodb";
-import { connectDB } from "../config/database.js";
+const express = require("express");
+const { ObjectId } = require("mongodb");
+const { connectDB } = require("../config/database.js");
 
 const router = express.Router();
 
@@ -73,4 +73,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

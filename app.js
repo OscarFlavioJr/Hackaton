@@ -1,12 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config();
+require("dotenv").config();
 
-import express from "express";
-import movieRoutes from "./routes/movie.routes.js";
+const express = require("express");
+const movieRoutes = require("./routes/movie.routes");
 
 const app = express();
 app.use(express.json());
 
 app.use("/movies", movieRoutes);
 
-app.listen(process.env.PORT || 3000);
+app.listen(3000);

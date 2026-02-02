@@ -1,0 +1,20 @@
+{
+  "name": "hackaton",
+  "version": "1.0.0",
+  "description": "sla vei",
+  "homepage": "https://github.com/OscarFlavioJr/Hackaton#readme",
+  "bugs": {
+    "url": "https://github.com/OscarFlavioJr/Hackaton/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OscarFlavioJr/Hackaton.git"
+  },
+  "license": "UNLICENSED",
+  "author": "me",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

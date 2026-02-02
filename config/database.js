@@ -1,11 +1,11 @@
-import { MongoClient } from "mongodb";
+const { MongoClient } = require("mongodb");
 
 const uri = process.env.mongo_uri;
 const client = new MongoClient(uri);
 
 let db;
 
-export async function connectDB() {
+async function connectDB() {
   if (!db) {
     await client.connect();
     db = client.db("movie_recommender");
@@ -13,3 +13,5 @@ export async function connectDB() {
   }
   return db;
 }
+
+module.exports = { connectDB };
