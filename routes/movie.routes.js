@@ -8,9 +8,20 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const db = await connectDB();
-    const result = await db.collection("movies").insertOne(req.body);
-    res.status(201).json(result);
+
+    if (!Array.isArray(req.body)) {
+      return res.status(400).json({ error: "Esperado um array de filmes" });
+    }
+
+    const result = await db
+      .collection("movies")
+      .insertMany(req.body, { ordered: false });
+
+    res.status(201).json({
+      insertedCount: result.insertedCount,
+    });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -28,20 +39,21 @@ router.get("/", async (req, res) => {
 });
 
 // READ BY ID
-router.get("/:id", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const db = await connectDB();
-    const movie = await db
-      .collection("movies")
-      .findOne({ _id: new ObjectId(req.params.id) });
 
-    if (!movie) {
-      return res.status(404).json({ message: "Filme não encontrado" });
+    if (!Array.isArray(req.body)) {
+      return res.status(400).json({ error: "Esperado um array de filmes" });
     }
 
-    res.json(movie);
+    const result = await db.collection("movies").insertMany(req.body);
+
+    res.status(201).json({
+      inserted: result.insertedCount,
+    });
   } catch (err) {
-    res.status(400).json({ error: "ID inválido" });
+    res.status(500).json({ error: err.message });
   }
 });
 

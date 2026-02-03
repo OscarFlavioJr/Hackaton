@@ -1,8 +1,11 @@
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import requests
+node_url = "http://localhost:3000/movies"
 
-# Carregar o CSV
+
+
 ratings = pd.read_csv("data/ratings.csv")
 
 # Criar a matriz usuário x filme
@@ -80,4 +83,14 @@ def recommend_movies_item_based_with_titles(user_id, n_recommendations=5):
 
     return result
 
-print (recommend_movies_item_based_with_titles(user_id=1))
+
+
+##print (recommend_movies_item_based_with_titles(user_id=1))
+
+movies_json = movies.to_dict(orient="records")
+
+response = requests.post(
+    node_url,
+    json= movies_json,
+    timeout = 50
+)
