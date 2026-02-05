@@ -2,9 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import requests
+
 node_url = "http://localhost:3000/movies"
-
-
 
 ratings = pd.read_csv("data/ratings.csv")
 
@@ -14,7 +13,6 @@ user_item_matrix = ratings.pivot(
     columns="movieId",
     values="rating"
 )
-##print(user_item_matrix.head())
 
 # Matriz item x usuário
 item_user_matrix = user_item_matrix.T.fillna(0)
@@ -29,7 +27,6 @@ item_similarity_df = pd.DataFrame(
 
 def recommend_movies_item_based(user_id, n_recommendations=10):
     user_ratings = user_item_matrix.loc[user_id].dropna()
-
     scores = {}
 
     for movie, rating in user_ratings.items():
@@ -84,13 +81,12 @@ def recommend_movies_item_based_with_titles(user_id, n_recommendations=5):
     return result
 
 
-
-##print (recommend_movies_item_based_with_titles(user_id=1))
+movies["imdbId"] = movies["movieId"].apply(get_imdb_id)
 
 movies_json = movies.to_dict(orient="records")
 
 response = requests.post(
     node_url,
-    json= movies_json,
-    timeout = 50
+    json=movies_json,
+    timeout=50
 )
