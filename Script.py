@@ -43,6 +43,10 @@ def recommend_movies_item_based(user_id, n_recommendations=10):
 # Carregar o CSV de filmes
 movies = pd.read_csv("data/movies.csv")
 
+movies["genres"] = movies["genres"].apply(
+    lambda g: g.split("|") if isinstance(g,str) else []
+)
+
 # Dicionário: movieId -> title
 movie_id_to_title = dict(
     zip(movies["movieId"], movies["title"])
